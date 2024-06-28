@@ -22,6 +22,7 @@ import {
 } from '../../Redux/Reducers/ErrorDocumentReducer';
 import {saveCompletedDocuments} from '../../Redux/Reducers/CompletedDocumentReducer';
 import {useSelectedCountHook} from '../../Hooks/SelectedCountHook';
+import {getApiBaseUrl} from '../../AppConfig/AppConfigRoot';
 
 export const usePendingScreen = () => {
   const counterRef = useRef<Array<any>>([]);
@@ -157,7 +158,7 @@ export const usePendingScreen = () => {
 
       await requestNotificationPermission();
       let options: any = {
-        url: 'https://841f-103-106-20-199.ngrok-free.app/uploadFiles/uploadFile',
+        url: `${getApiBaseUrl()}uploadFiles/uploadFile`,
         path: item.uri,
         method: 'POST',
         field: 'file',
@@ -192,9 +193,11 @@ export const usePendingScreen = () => {
               uploadedDocument(item);
             }
           });
-          Upload.addListener('error', uploadId, () => {
-            dispatch(saveErrorDocuments({item, type: 'Add'}));
-            dispatch(setUploadingDocument({type: 'Remove', guid: item.guid}));
+          Upload.addListener('error', uploadId, data => {
+            if (!data || data.error !== 'User cancelled upload') {
+              dispatch(saveErrorDocuments({item, type: 'Add'}));
+              dispatch(setUploadingDocument({type: 'Remove', guid: item.guid}));
+            }
           });
           Upload.addListener('cancelled', uploadId, () => {});
           Upload.addListener('completed', uploadId, () => {

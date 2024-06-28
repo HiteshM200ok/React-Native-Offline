@@ -99,9 +99,11 @@ const CompletedScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.White,
   },
   listHeader: {
     padding: 10,
+    backgroundColor: Colors.White,
   },
   checkBoxView: {
     flexDirection: 'row',

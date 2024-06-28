@@ -73,7 +73,11 @@ const DocumentItem = ({
         aria-disabled={item.isSelected}
         style={[
           styles.container,
-          {backgroundColor: item.isSelected ? 'lightgray' : 'lightblue'},
+          {
+            backgroundColor: item.isSelected
+              ? Colors.LightGray
+              : Colors.LightBlue,
+          },
         ]}>
         <View style={styles.item}>
           <Icon

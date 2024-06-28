@@ -36,7 +36,8 @@ export const useSelectedCountHook = (
     return {
       selectedCount,
       totalCount,
-      isAllSelected: totalCount - uploadingCount == selectedCount,
+      isAllSelected:
+        selectedCount >= 1 && totalCount - uploadingCount === selectedCount,
     };
   }, [data]);
 };
